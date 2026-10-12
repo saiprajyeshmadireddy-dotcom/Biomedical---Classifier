@@ -1,0 +1,14 @@
+
+{
+  "name": "Processor B",
+  "description": "Participant-designed ring qubit connectivity model",
+  "num_qubits": 5,
+  "coupling_map": [
+    [0, 1],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 0]
+  ],
+  "basis_gates": ["rz", "sx", "x", "cx"]
+}

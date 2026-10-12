@@ -1,0 +1,75 @@
+{
+  "project": "ALGOX - PS-Q1 Biomedical Signal Classifier",
+  "dataset": "Kaggle ECG Heartbeat Categorization Dataset (MIT-BIH CSV split)",
+  "dataset_note": "External dataset; confirm hackathon rules and dataset terms before submission.",
+  "model": "StandardScaler + LogisticRegression(class_weight='balanced', max_iter=300)",
+  "train_samples": 87554,
+  "test_samples": 21892,
+  "features_per_sample": 187,
+  "class_labels_seen_in_train": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "class_labels_seen_in_test": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "accuracy": 0.6729398867166088,
+  "macro_precision": 0.44257704749409565,
+  "macro_recall": 0.7629364556447097,
+  "macro_f1": 0.47749506564391464,
+  "weighted_f1": 0.7364518458899862,
+  "elapsed_seconds": 9.96,
+  "classification_report": {
+    "0": {
+      "precision": 0.9718555417185554,
+      "recall": 0.6460978032895464,
+      "f1-score": 0.7761827404435898,
+      "support": 18118.0
+    },
+    "1": {
+      "precision": 0.14511664689600634,
+      "recall": 0.6600719424460432,
+      "f1-score": 0.2379254457050243,
+      "support": 556.0
+    },
+    "2": {
+      "precision": 0.2982406356413167,
+      "recall": 0.725828729281768,
+      "f1-score": 0.4227674979887369,
+      "support": 1448.0
+    },
+    "3": {
+      "precision": 0.08066361556064074,
+      "recall": 0.8703703703703703,
+      "f1-score": 0.14764397905759163,
+      "support": 162.0
+    },
+    "4": {
+      "precision": 0.717008797653959,
+      "recall": 0.9123134328358209,
+      "f1-score": 0.8029556650246306,
+      "support": 1608.0
+    },
+    "accuracy": 0.6729398867166088,
+    "macro avg": {
+      "precision": 0.44257704749409565,
+      "recall": 0.7629364556447097,
+      "f1-score": 0.47749506564391464,
+      "support": 21892.0
+    },
+    "weighted avg": {
+      "precision": 0.8809900261870995,
+      "recall": 0.6729398867166088,
+      "f1-score": 0.7364518458899862,
+      "support": 21892.0
+    }
+  },
+  "scope_note": "Classical ML results only; not quantum-hardware results or Processor A/B benchmark results."
+}
