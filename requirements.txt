@@ -1,6 +1,7 @@
-# Suggested starting list only — verify against imports and tested versions before submission.
+# Install with: python -m pip install -r requirements.txt
 numpy
 pandas
 scikit-learn
 matplotlib
 qiskit
+qiskit-aer
