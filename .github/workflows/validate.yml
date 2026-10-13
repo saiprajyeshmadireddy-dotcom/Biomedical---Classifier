@@ -24,5 +24,41 @@ jobs:
         run: python -m compileall -q project/processors
       - name: Validate processor JSON
         run: python project/processors/check_processors.py
-      - name: Run processor transpilation comparison
-        run: python project/processors/compare_processors.py
+      - name: Run processor comparison and verify generated CSV
+        run: |
+          python project/processors/compare_processors.py
+          python - <<'PY'
+          import csv
+          from pathlib import Path
+
+          path = Path("results/processor_comparison.csv")
+          if not path.is_file():
+              raise SystemExit(f"Expected comparison output was not created: {path}")
+          with path.open(newline="", encoding="utf-8") as file:
+              rows = list(csv.DictReader(file))
+          if len(rows) != 2:
+              raise SystemExit(f"Expected 2 processor rows, found {len(rows)}")
+          expected = {"Processor A", "Processor B"}
+          if {row.get("processor") for row in rows} != expected:
+              raise SystemExit("Comparison CSV must contain Processor A and Processor B")
+          required = {
+              "configured_qubits", "logical_circuit_qubits", "depth",
+              "total_operations", "cx_count", "swap_count", "rz_count",
+              "sx_count", "definition_status", "connectivity_assumption",
+          }
+          if not required.issubset(rows[0]):
+              raise SystemExit(f"Missing CSV columns: {sorted(required - set(rows[0]))}")
+          for row in rows:
+              for key in ("configured_qubits", "logical_circuit_qubits", "depth",
+                          "total_operations", "cx_count", "swap_count", "rz_count", "sx_count"):
+                  if int(row[key]) < 0:
+                      raise SystemExit(f"Negative {key} for {row['processor']}")
+          print("PASS: generated processor comparison CSV validated.")
+          PY
+      - name: Report ECG dataset availability
+        run: |
+          if [ -f data/mitbih_train.csv ] && [ -f data/mitbih_test.csv ]; then
+            echo "Both ECG dataset splits are present. ECG model training is available as a manual/local step."
+          else
+            echo "::warning::ECG classifier was not run: data/mitbih_train.csv and/or data/mitbih_test.csv are missing. See data/README.md."
+          fi
