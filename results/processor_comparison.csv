@@ -1,0 +1,3 @@
+processor,configured_qubits,logical_circuit_qubits,depth,total_operations,cx_count,swap_count,rz_count,sx_count,definition_status,connectivity_assumption
+Processor A,5,5,12,18,15,0,2,1,not_recorded,Listed edges treated as bidirectional
+Processor B,7,5,5,9,6,0,2,1,participant_assumption_not_official,Listed edges treated as bidirectional
