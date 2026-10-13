@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 
 from qiskit import QuantumCircuit, transpile
+from qiskit.circuit import Parameter
 from qiskit.transpiler import Target, InstructionProperties
 from qiskit.circuit.library import CXGate, XGate, RZGate, SXGate
 
@@ -22,7 +23,7 @@ def build_target(config):
     target = Target(num_qubits=num_qubits)
 
     # Assumption: these one-qubit gates are available on every configured qubit.
-    for gate in (RZGate(0), SXGate(), XGate()):
+    for gate in (RZGate(Parameter("theta")), SXGate(), XGate()):
         target.add_instruction(
             gate,
             {(q,): InstructionProperties() for q in range(num_qubits)},
