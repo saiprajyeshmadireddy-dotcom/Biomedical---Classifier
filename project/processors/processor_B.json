@@ -1,14 +1,16 @@
-
 {
   "name": "Processor B",
-  "description": "Participant-designed ring qubit connectivity model",
-  "num_qubits": 5,
+  "description": "Participant-defined 7-qubit heavy-hex-inspired connectivity model; exact official coupling map not supplied in the available guideline",
+  "num_qubits": 7,
   "coupling_map": [
     [0, 1],
     [1, 2],
     [2, 3],
     [3, 4],
-    [4, 0]
+    [4, 5],
+    [5, 6],
+    [1, 4]
   ],
-  "basis_gates": ["rz", "sx", "x", "cx"]
+  "basis_gates": ["rz", "sx", "x", "cx"],
+  "definition_status": "participant_assumption_not_official"
 }
