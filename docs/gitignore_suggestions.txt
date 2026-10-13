@@ -1,0 +1,12 @@
+# Add these patterns to the team's existing .gitignore if they are not already present.
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+Thumbs.db
+
+# Large raw data: keep out of Git unless the project rules and dataset license permit it.
+# Uncomment the next line if the team stores the dataset under data/:
+# data/*.csv
