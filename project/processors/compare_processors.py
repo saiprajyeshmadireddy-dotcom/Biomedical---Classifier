@@ -87,7 +87,44 @@ def main():
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
-    print(f"\nSaved fresh comparison CSV to: {output_path}")
+
+    # Read the file back and fail immediately if the generated artifact is malformed.
+    with output_path.open("r", newline="", encoding="utf-8") as file:
+        saved_rows = list(csv.DictReader(file))
+
+    expected_processors = {"Processor A", "Processor B"}
+    actual_processors = {row.get("processor") for row in saved_rows}
+    if len(saved_rows) != 2 or actual_processors != expected_processors:
+        raise RuntimeError(
+            f"Generated comparison CSV has unexpected rows/processors: {actual_processors}"
+        )
+
+    required_columns = {
+        "processor", "configured_qubits", "logical_circuit_qubits", "depth",
+        "total_operations", "cx_count", "swap_count", "rz_count", "sx_count",
+        "definition_status", "connectivity_assumption",
+    }
+    if not required_columns.issubset(saved_rows[0].keys()):
+        raise RuntimeError("Generated comparison CSV is missing required columns.")
+
+    for row in saved_rows:
+        for column in (
+            "configured_qubits", "logical_circuit_qubits", "depth",
+            "total_operations", "cx_count", "swap_count", "rz_count", "sx_count",
+        ):
+            try:
+                value = int(row[column])
+            except (KeyError, TypeError, ValueError) as exc:
+                raise RuntimeError(
+                    f"Generated comparison CSV has an invalid {column} for {row.get('processor')}"
+                ) from exc
+            if value < 0:
+                raise RuntimeError(
+                    f"Generated comparison CSV has a negative {column} for {row.get('processor')}"
+                )
+
+    print(f"\nSaved and verified fresh comparison CSV: {output_path}")
+    print(f"Verified {len(saved_rows)} rows and {len(required_columns)} required columns.")
     print("Note: this is a synthetic transpilation test, not a physical-hardware or ECG-classifier benchmark.")
 
 
