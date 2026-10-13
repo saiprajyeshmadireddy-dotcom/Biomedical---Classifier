@@ -60,6 +60,7 @@ jobs:
           if [ -f data/mitbih_train.csv ] && [ -f data/mitbih_test.csv ]; then
             python project/processors/main_real_ecg.py
           else
+            rm -f results/ecg_metrics.json results/ecg_metrics.csv results/ecg_confusion_matrix.png
             echo "::warning::ECG classifier was not run: data/mitbih_train.csv and/or data/mitbih_test.csv are missing. See data/README.md."
           fi
       - name: Upload generated results
