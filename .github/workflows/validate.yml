@@ -55,10 +55,21 @@ jobs:
                       raise SystemExit(f"Negative {key} for {row['processor']}")
           print("PASS: generated processor comparison CSV validated.")
           PY
-      - name: Report ECG dataset availability
+      - name: Run ECG classifier when dataset files are available
         run: |
           if [ -f data/mitbih_train.csv ] && [ -f data/mitbih_test.csv ]; then
-            echo "Both ECG dataset splits are present. ECG model training is available as a manual/local step."
+            python project/processors/main_real_ecg.py
           else
             echo "::warning::ECG classifier was not run: data/mitbih_train.csv and/or data/mitbih_test.csv are missing. See data/README.md."
           fi
+      - name: Upload generated results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: biomedical-classifier-results
+          path: |
+            results/processor_comparison.csv
+            results/ecg_metrics.json
+            results/ecg_metrics.csv
+            results/ecg_confusion_matrix.png
+          if-no-files-found: warn
