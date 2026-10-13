@@ -1,6 +1,14 @@
-
-*.csv
-__pycache__/
-*.py[cod]
+# Python environments and caches
 .venv/
 venv/
+__pycache__/
+*.py[cod]
+
+# Local secrets and OS/editor files
+.env
+.DS_Store
+Thumbs.db
+
+# Ignore datasets/CSVs by default, but keep generated result tables versionable
+*.csv
+!results/*.csv
