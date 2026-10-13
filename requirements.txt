@@ -1,0 +1,6 @@
+# Suggested starting list only — verify against imports and tested versions before submission.
+numpy
+pandas
+scikit-learn
+matplotlib
+qiskit
