@@ -15,8 +15,8 @@ from sklearn.metrics import (
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-ROOT = Path(__file__).resolve().parent
-DATA_DIR = ROOT / "Data"
+ROOT = Path(__file__).resolve().parents[2]
+DATA_DIR = ROOT / "data"
 RESULTS_DIR = ROOT / "results"
 RESULTS_DIR.mkdir(exist_ok=True)
 
